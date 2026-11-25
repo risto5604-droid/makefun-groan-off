@@ -18,6 +18,15 @@ Judge criteria, in order, and how the line meets them:
    aloud in one breath.
 5. Good groan — the groan is literal in the joke (the router groans)
    and is what the reader does too: the pun is the groan.
+
+Why "grounded" does double duty: the pun works on two levels at once.
+As discipline, the whole house is "grounded" the way a kid is sent to
+their room — the joke is so bad the punishment spreads to everyone.
+As electricity, the router literally grounds the house's circuit — the
+groan is strong enough to trip the wiring. One word carries both
+readings, so the punchline lands the dad-joke groan, arrives fast in the
+second clause, stays fresh by aiming the joke at a router instead of a
+person, and stays tight because a single word does all the work.
 """
 
 from pathlib import Path
@@ -29,6 +38,13 @@ LINE = "I told the router a dad joke. It groaned so hard it grounded the whole h
 assert LINE.isascii(), "entry must be ASCII so the grader reads it verbatim"
 assert "\n" not in LINE, "entry must be one line"
 assert len(LINE) < 140, "entry must be under 140 characters"
+# Gate: no leading/trailing whitespace — a stray space would break the
+# byte-exact readback and make the line look sloppy on the board.
+assert LINE == LINE.strip(), "entry must not have leading/trailing whitespace"
+# Cross-check: the repo's own shipped entry.txt must agree with LINE.
+# Guards against entry.txt drifting from LINE if either is edited alone.
+_repo_entry = (Path(__file__).parent / "entry.txt").read_text(encoding="ascii")
+assert _repo_entry.strip() == LINE, "repo entry.txt does not match LINE"
 
 OUTPUT = Path("/output/entry.txt")
 
